@@ -73,8 +73,9 @@ void handle_input(enum Direction* d_ptr){
 
 int handle_interrupt(int signal){
     endwin();
-    canceled = true;
-    return 0;
+    pthread_cancel(input_thread);
+	canceled = true;
+	return 0;
 }
 
 int main(int argc, char** argv){
@@ -107,7 +108,7 @@ int main(int argc, char** argv){
         }
         
     }
-
+	move(0,0);
     int init_x = COLS/2;
     int init_y = ROWS/2;
 
@@ -126,12 +127,12 @@ int main(int argc, char** argv){
     cur_dir = &copy_d;
 
     enum Tile** board = malloc(ROWS*sizeof(enum Tile*));
-    for(size_t i = 0; i < ROWS; i++){
+    for(int i = 0; i < ROWS; i++){
         board[i] = malloc(COLS*sizeof(enum Tile));
     }
 
-    for(size_t i = 0; i < ROWS; i++){
-        for(size_t j = 0; j < COLS; j++){
+    for(int i = 0; i < ROWS; i++){
+        for(int j = 0; j < COLS; j++){
             if(i == init_y && j == init_x){
                 board[i][j] = snake_head;
             } else{
@@ -149,14 +150,14 @@ int main(int argc, char** argv){
 
     
 
-    for(size_t x = 0; x < COLS; x++){
-        for(size_t y = 0; y < ROWS; y++){
+    for(int x = 0; x < COLS; x++){
+        for(int y = 0; y < ROWS; y++){
             mvaddch(y, x, '.');
         }
     }
 
     mvaddch(apple_y, apple_x, '@');
-
+	refresh();
     pthread_t thread;
     pthread_create(&thread, NULL, (void*)handle_input, &d);
     input_thread = thread;
