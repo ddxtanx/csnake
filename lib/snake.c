@@ -35,7 +35,7 @@ void init_state(state* state, int rows, int cols){
     state -> board = board;
 
     for(int i = 0; i < rows; i++){
-        for(int j = 0; j < rows; j++){
+        for(int j = 0; j < cols; j++){
             if(i == init_y && j == init_x){
                 board[i][j] = snake_head;
             } else{

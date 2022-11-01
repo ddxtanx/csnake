@@ -27,7 +27,6 @@ int handle_interrupt(int signal){
 
 int main(int argc, char** argv){
     signal(SIGINT, (void*)handle_interrupt);
-    signal(SIGSTOP, (void*)handle_interrupt);
     signal(SIGTERM, (void*)handle_interrupt);
 
     screen scr;
