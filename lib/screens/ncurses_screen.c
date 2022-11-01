@@ -104,7 +104,7 @@ extern void init_screen(){
     move(0,0);
 }
 
-extern void get_max_x_y(int* x, int* y){
+extern void get_max_x_y(int* y, int* x){
     int r, c;
     getmaxyx(stdscr, r, c);
 

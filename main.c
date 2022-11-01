@@ -1,13 +1,12 @@
-#include <ncurses.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include <pthread.h>
 #include <unistd.h>
 #include <signal.h>
 #include "lib/snake.h"
 #include "lib/screens/ncurses_screen.h"
+#include <pthread.h>
 
 pthread_t input_thread;
 bool canceled = false;

@@ -5,5 +5,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 add_subdirectory(lib)
 
-add_executable(snake_text main_ncurses.c)
-target_link_libraries(snake_text snake ncurses_screen)
+find_package(Threads REQUIRED)
+
+add_executable(main main.c)
+target_link_libraries(main snake ncurses_screen Threads::Threads)
