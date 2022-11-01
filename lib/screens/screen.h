@@ -7,5 +7,5 @@ typedef struct __screen{
     void (*get_input)(state* s);
     void (*close_screen)();
 
-    void (*get_max_x_y)(int* x, int* y);
+    void (*get_max_x_y)(int* y, int* x);
 } screen;

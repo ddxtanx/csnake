@@ -6,6 +6,7 @@
 #include <signal.h>
 #include "lib/snake.h"
 #include "lib/screens/ncurses_screen.h"
+#include "lib/screens/gtk_screen.h"
 #include <pthread.h>
 
 pthread_t input_thread;
@@ -29,8 +30,8 @@ int main(int argc, char** argv){
     signal(SIGTERM, (void*)handle_interrupt);
 
     screen scr;
-    initialize_ncurses_screen(&scr);
-
+    //initialize_ncurses_screen(&scr);
+    initialize_gtk_screen(&scr);
     screen_p = &scr;
 
     scr.init_screen();
