@@ -24,7 +24,7 @@ char get_snake_head_given_dir(enum Direction d){
 
 extern void draw_state(state* s){
     enum Tile** board = s -> board;
-    clear();
+	//clear();
     for(int i = 0; i < s -> rows; i++){
         for(int j = 0; j < s -> cols; j++){
             enum Tile t = board[i][j];
