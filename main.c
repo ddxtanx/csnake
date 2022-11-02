@@ -14,6 +14,12 @@ bool canceled = false;
 state* state_p = NULL;
 screen* screen_p = NULL;
 
+int default_width = 500;
+int default_height = 500;
+
+int default_rows = 20;
+int default_cols = 20;
+
 int handle_interrupt(int signal){
     if(screen_p != NULL){
         screen_p -> close_screen();
@@ -30,37 +36,63 @@ int main(int argc, char** argv){
     signal(SIGTERM, (void*)handle_interrupt);
 
     screen scr;
+    bool gui_mode = true;
+
     //initialize_ncurses_screen(&scr);
-    initialize_gui_screen(&scr);
+    if(gui_mode){
+        initialize_gui_screen(&scr);
+    } else{
+        initialize_ncurses_screen(&scr);
+    }
+    
     screen_p = &scr;
 
     
 
-    int ROWS, COLS;
-    scr.get_max_x_y(&ROWS, &COLS);
+    int WIDTH, HEIGHT;
+    scr.get_max_x_y(&WIDTH, &HEIGHT);
 
-    if(argc == 3){
+    int ROWS = default_rows;
+    int COLS = default_cols;
+
+    if(argc >= 3){
         char* rowsp;
         char* colsp;
-        long arg_rows = strtol(argv[1], &rowsp, 10);
-        int arg_cols = strtol(argv[2], &colsp, 10);
+        long arg_width = strtol(argv[1], &rowsp, 10);
+        int arg_height = strtol(argv[2], &colsp, 10);
 
         if(rowsp != argv[1]){
-            ROWS = arg_rows > ROWS ? ROWS : arg_rows;
-        } else{
-            ROWS = 400 > ROWS ? ROWS : 400;
+            HEIGHT = arg_height > HEIGHT ? HEIGHT : arg_height;
         }
         
         if(colsp != argv[2]){
-            COLS = arg_cols > COLS ? COLS : arg_cols;
-        } else{
-            COLS = 400 > COLS ? COLS : 400;
+            WIDTH = arg_width > WIDTH ? WIDTH : arg_width;
         }
-        
+    } else if(gui_mode){
+        HEIGHT = default_height > HEIGHT ? HEIGHT : default_height;
+        WIDTH = default_width > WIDTH ? WIDTH : default_width;
+    } else{
+        HEIGHT = default_rows > HEIGHT ? HEIGHT : default_rows;
+        WIDTH = default_cols > WIDTH ? WIDTH : default_cols;
     }
 
-    scr.init_screen(COLS, ROWS);
+    if(argc == 5){
+        char* rowsp;
+        char* colsp;
+        long arg_rows = strtol(argv[3], &rowsp, 10);
+        int arg_cols = strtol(argv[4], &colsp, 10);
+
+        if(rowsp != argv[3]){
+            ROWS = arg_rows;
+        }
+        if(colsp != argv[4]){
+            COLS = arg_cols;
+        }
+    } 
+
+    scr.init_screen(WIDTH, HEIGHT);
     printf("Init'd screen\n");
+
 
     state s;
     init_state(&s, ROWS, COLS);
@@ -89,9 +121,11 @@ int main(int argc, char** argv){
         int remaining = (1.0/12 * 1000000) - diff;
         usleep(remaining);
     }
-
-    pthread_cancel(thread);
     scr.close_screen();
+    destroy_state(&s);
+    pthread_cancel(thread);
+    pthread_join(thread, NULL);
+    
     
     return 0;
 }

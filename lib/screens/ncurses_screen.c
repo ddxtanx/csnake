@@ -22,7 +22,7 @@ char get_snake_head_given_dir(enum Direction d){
 }
 
 
-extern void draw_state(state* s){
+extern void draw_state_nc(state* s){
     enum Tile** board = s -> board;
     //clear();
     for(int i = 0; i < s -> rows; i++){
@@ -56,7 +56,7 @@ extern void draw_state(state* s){
 
     refresh();
 }
-extern void handle_input(state* s){
+extern void handle_input_nc(state* s){
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
     while(true){
@@ -91,11 +91,11 @@ extern void handle_input(state* s){
     }
 }
 
-extern void close_screen(){
+extern void close_screen_nc(){
     endwin();
 }
 
-extern void init_screen(int width, int height){
+extern void init_screen_nc(int width, int height){
     initscr();
     cbreak();
     keypad(stdscr, true);
@@ -104,7 +104,7 @@ extern void init_screen(int width, int height){
     move(0,0);
 }
 
-extern void get_max_x_y(int* y, int* x){
+extern void get_max_x_y_nc(int* y, int* x){
     int r, c;
     getmaxyx(stdscr, r, c);
 
@@ -114,9 +114,9 @@ extern void get_max_x_y(int* y, int* x){
 
 void initialize_ncurses_screen(screen *sc){
 
-    sc -> init_screen = init_screen;
-    sc -> get_input = handle_input;
-    sc -> draw_state = draw_state;
-    sc -> close_screen = close_screen;
-    sc -> get_max_x_y = get_max_x_y;
+    sc -> init_screen = init_screen_nc;
+    sc -> get_input = handle_input_nc;
+    sc -> draw_state = draw_state_nc;
+    sc -> close_screen = close_screen_nc;
+    sc -> get_max_x_y = get_max_x_y_nc;
 }
