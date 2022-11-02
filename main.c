@@ -6,7 +6,7 @@
 #include <signal.h>
 #include "lib/snake.h"
 #include "lib/screens/ncurses_screen.h"
-#include "lib/screens/gtk_screen.h"
+#include "lib/screens/gui_screen.h"
 #include <pthread.h>
 
 pthread_t input_thread;
@@ -31,10 +31,11 @@ int main(int argc, char** argv){
 
     screen scr;
     //initialize_ncurses_screen(&scr);
-    initialize_gtk_screen(&scr);
+    initialize_gui_screen(&scr);
     screen_p = &scr;
 
     scr.init_screen();
+    printf("Init'd screen\n");
 
     int ROWS, COLS;
     scr.get_max_x_y(&ROWS, &COLS);
@@ -76,6 +77,7 @@ int main(int argc, char** argv){
 
         advance_state(&s);
         scr.draw_state(&s);
+        //printf("Drawing\n");
 
         int diff = clock() - c;
         int remaining = (1.0/12 * 1000000) - diff;

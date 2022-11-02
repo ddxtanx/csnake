@@ -8,4 +8,4 @@ add_subdirectory(lib)
 find_package(Threads REQUIRED)
 
 add_executable(main main.c)
-target_link_libraries(main snake ncurses_screen gtk_screen Threads::Threads)
+target_link_libraries(main snake ncurses_screen gui_screen Threads::Threads)
