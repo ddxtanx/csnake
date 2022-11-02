@@ -28,12 +28,14 @@ extern void close_screen(){
 }
 
 extern void get_max_x_y(int* y, int* x){
-    *y = 400;
-    *x = 400;
+    int scr_height = GetScreenHeight();
+    int scr_width = GetScreenWidth();
+    *y = scr_height;
+    *x = scr_width;
 }
 
-extern void init_screen(){
-    InitWindow(400, 400, "Snake!");
+extern void init_screen(int width, int height){
+    InitWindow(width, height, "Snake!");
 }
 
 void initialize_gui_screen(screen *sc){

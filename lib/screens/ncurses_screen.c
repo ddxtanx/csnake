@@ -95,7 +95,7 @@ extern void close_screen(){
     endwin();
 }
 
-extern void init_screen(){
+extern void init_screen(int width, int height){
     initscr();
     cbreak();
     keypad(stdscr, true);

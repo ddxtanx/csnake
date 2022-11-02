@@ -34,8 +34,7 @@ int main(int argc, char** argv){
     initialize_gui_screen(&scr);
     screen_p = &scr;
 
-    scr.init_screen();
-    printf("Init'd screen\n");
+    
 
     int ROWS, COLS;
     scr.get_max_x_y(&ROWS, &COLS);
@@ -48,13 +47,20 @@ int main(int argc, char** argv){
 
         if(rowsp != argv[1]){
             ROWS = arg_rows > ROWS ? ROWS : arg_rows;
+        } else{
+            ROWS = 400 > ROWS ? ROWS : 400;
         }
         
         if(colsp != argv[2]){
             COLS = arg_cols > COLS ? COLS : arg_cols;
+        } else{
+            COLS = 400 > COLS ? COLS : 400;
         }
         
     }
+
+    scr.init_screen(COLS, ROWS);
+    printf("Init'd screen\n");
 
     state s;
     init_state(&s, ROWS, COLS);
