@@ -135,6 +135,7 @@ void advance_state(state* s){
         snake_segment* new_seg = malloc(sizeof(snake_segment));
         new_seg -> x = old_x;
         new_seg -> y = old_y;
+        new_seg -> next_segment = NULL;
         s -> board[old_y][old_x] = snake;
 
         s -> tail -> next_segment = new_seg;

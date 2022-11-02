@@ -14,3 +14,9 @@ target_link_libraries(ncurses_screen ${CURSES_LIBRARIES})
 
 add_library(gui_screen gui_screen.c)
 target_link_libraries(gui_screen raylib)
+
+if (APPLE)
+    target_link_libraries(gui_screen "-framework IOKit")
+    target_link_libraries(gui_screen "-framework Cocoa")
+    target_link_libraries(gui_screen "-framework OpenGL")
+endif()
